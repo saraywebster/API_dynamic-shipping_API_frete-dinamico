@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { config, configDotenv } from 'dotenv';
 import { ConfigModule } from '@nestjs/config';
+import { FreightModule } from './modules/freight/freight.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ConfigModule } from '@nestjs/config';
       autoLoadEntities: true,
       synchronize: true, // false
     }),
+    FreightModule,
   ],
 
   //FreightModule,
