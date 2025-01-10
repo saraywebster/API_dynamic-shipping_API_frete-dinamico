@@ -18,7 +18,7 @@ export class FreightService {
       where: { name },
     });
 
-    if (!existingZone) {
+    if (existingZone) {
       throw new ConflictException('Zona já cadastrada');
     }
 
