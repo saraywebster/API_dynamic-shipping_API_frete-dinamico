@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { config, configDotenv } from 'dotenv';
+//import { config, configDotenv } from 'dotenv';
 import { ConfigModule } from '@nestjs/config';
 import { FreightModule } from './modules/freight/freight.module';
 
@@ -24,7 +24,6 @@ import { FreightModule } from './modules/freight/freight.module';
     FreightModule,
   ],
 
-  //FreightModule,
   controllers: [AppController],
   providers: [AppService],
 })
