@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { Geometry } from 'geojson';
 
 @Entity('dynamic_zones')
@@ -10,7 +10,7 @@ export class DynamicZoneEntity {
   name: string;
 
   @Column('geometry', { spatialFeatureType: 'Polygon', srid: 4326 })
-  area: Geometry;
+  region: Geometry;
 
   @Column({ type: 'float', default: 1.0 })
   multiplier: number;

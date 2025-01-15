@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+
 import { TypeOrmModule } from '@nestjs/typeorm';
 //import { config, configDotenv } from 'dotenv';
 import { ConfigModule } from '@nestjs/config';
-import { FreightModule } from './modules/freight/freight.module';
+import { ZoneModule } from './modules/zone/zone.module';
 
 @Module({
   imports: [
@@ -21,10 +20,7 @@ import { FreightModule } from './modules/freight/freight.module';
       autoLoadEntities: true,
       synchronize: true, // false
     }),
-    FreightModule,
+    ZoneModule,
   ],
-
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
