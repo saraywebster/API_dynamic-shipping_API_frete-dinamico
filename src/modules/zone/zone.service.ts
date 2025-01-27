@@ -1,10 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
-import { DynamicZoneEntity } from './dynamic-zone.entity';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { DynamicZoneEntity } from './dynamic-zone.entity';
 import { CreateZoneDto, UpdateZoneDto } from './zone.dto';
-import { dot } from 'node:test/reporters';
-import { find } from 'rxjs';
 @Injectable()
 export class ZoneService {
   constructor(
