@@ -5,7 +5,16 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { RegionDto } from '../region.dto';
+
+export class RegionDto {
+  @IsNotEmpty()
+  @IsString()
+  type: GeoJSON.Polygon['type'];
+
+  @IsNotEmpty()
+  coordinates: GeoJSON.Polygon['coordinates'];
+}
+
 export class CreateZoneDto {
   @IsNotEmpty()
   @IsString()
