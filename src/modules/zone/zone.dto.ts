@@ -1,6 +1,19 @@
-import { IsNumber, IsString } from 'class-validator';
-import { IsNotEmpty } from 'class-validator';
-import { GeoJSON } from 'geojson';
+import { Type } from 'class-transformer';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+
+export class RegionDto {
+  @IsNotEmpty()
+  @IsString()
+  type: GeoJSON.Polygon['type'];
+
+  @IsNotEmpty()
+  coordinates: GeoJSON.Polygon['coordinates'];
+}
 
 export class CreateZoneDto {
   @IsNotEmpty()
@@ -12,7 +25,9 @@ export class CreateZoneDto {
   multiplier: number;
 
   @IsNotEmpty()
-  region: GeoJSON.Geometry;
+  @ValidateNested()
+  @Type(() => RegionDto)
+  region: RegionDto;
 }
 
 export class UpdateZoneDto {
@@ -25,5 +40,7 @@ export class UpdateZoneDto {
   multiplier: number;
 
   @IsNotEmpty()
-  region: GeoJSON.Geometry;
+  @ValidateNested()
+  @Type(() => RegionDto)
+  region: RegionDto;
 }
