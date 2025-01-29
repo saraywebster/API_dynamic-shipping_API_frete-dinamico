@@ -12,6 +12,8 @@ export class RegionDto {
   type: GeoJSON.Polygon['type'];
 
   @IsNotEmpty()
+  @IsArray()
+  @ValidateNested({each: true})
   coordinates: GeoJSON.Polygon['coordinates'];
 }
 
