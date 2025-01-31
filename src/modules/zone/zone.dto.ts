@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import {
+  IsArray,
   IsNotEmpty,
   IsNumber,
   IsString,
@@ -13,7 +14,7 @@ export class RegionDto {
 
   @IsNotEmpty()
   @IsArray()
-  @ValidateNested({each: true})
+  @ValidateNested({ each: true })
   coordinates: GeoJSON.Polygon['coordinates'];
 }
 

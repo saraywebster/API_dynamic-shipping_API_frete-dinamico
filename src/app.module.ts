@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 //import { config, configDotenv } from 'dotenv';
 import { ConfigModule } from '@nestjs/config';
+import { CostDeliveryModule } from './modules/cost-delivery/cost-delivery.module';
 import { ZoneModule } from './modules/zone/zone.module';
 
 @Module({
@@ -21,6 +22,7 @@ import { ZoneModule } from './modules/zone/zone.module';
       synchronize: true, // false
     }),
     ZoneModule,
+    CostDeliveryModule,
   ],
 })
 export class AppModule {}
