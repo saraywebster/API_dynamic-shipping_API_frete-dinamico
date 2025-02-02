@@ -14,8 +14,7 @@ export class RegionDto {
 
   @IsNotEmpty()
   @IsArray()
-  @ValidateNested({ each: true })
-  coordinates: GeoJSON.Polygon['coordinates'];
+  coordinates: number[][][];
 }
 
 export class CreateZoneDto {

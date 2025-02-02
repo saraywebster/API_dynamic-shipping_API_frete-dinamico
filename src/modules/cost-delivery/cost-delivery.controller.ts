@@ -7,6 +7,9 @@ export class CostDeliveryController {
 
   @Post('distance')
   async createDeliveryCost(@Body() dto: OriginDestinationDto) {
+    //   console.log('📥 Request Body:', JSON.stringify(body, null, 2));
+    // return { message: "Recebido com sucesso!" };
+
     const cost = this.costDeliveryService.calculateDeliveryCost(dto);
 
     return cost;

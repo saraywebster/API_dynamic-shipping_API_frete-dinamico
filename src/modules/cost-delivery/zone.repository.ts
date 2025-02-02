@@ -11,39 +11,24 @@ export class ZoneRepository {
     private readonly zoneRepository: Repository<DynamicZoneEntity>,
   ) {}
 
-  private async getZoneDetails(lng: number, lat: number) {
-    const result = await this.zoneRepository
-      .createQueryBuilder('dynamic_zones')
-      .where(
-        `ST_Contains(zone.geometry, ST_SetSRID(ST_MakePoint(:lng, :lat), 4326))`,
-        { lng, lat },
-      )
-      .getOne();
-
-    if (result) {
-      return { inside: true, multiplier: result.multiplier };
-    }
-
-    return { inside: false, multiplier: 1 };
-  }
-
-  async CheckOriginOrDestinatioCost(dto: OriginDestinationDto) {
+  async findHigherMultiplier(dto: OriginDestinationDto) {
     const { origin, destination } = dto;
 
-    const originDetailsMultiplier = await this.getZoneDetails(
-      origin.lng,
-      origin.lat,
-    );
-    const destinationDetailsMultiplier = await this.getZoneDetails(
-      destination.lng,
-      destination.lat,
-    );
+    const zone = await this.zoneRepository
+      .createQueryBuilder('dynamic_zones')
+      .where(
+        `ST_Contains(dynamic_zones.region, ST_SetSRID(ST_MakePoint(:originlng, :originlat), 4326)) OR 
+      ST_Contains(dynamic_zones.region, ST_SetSRID(ST_MakePoint(:destinationlng, :destinationlat), 4326))`,
+        {
+          originlng: origin.lng,
+          originlat: origin.lat,
+          destinationlng: destination.lng,
+          destinationlat: destination.lat,
+        },
+      )
+      .orderBy('dynamic_zones.multiplier', 'DESC')
+      .getOne();
 
-    return {
-      originInside: originDetailsMultiplier.inside,
-      originMultiplier: originDetailsMultiplier.multiplier,
-      destinationInside: destinationDetailsMultiplier.inside,
-      destinationMultiplier: destinationDetailsMultiplier.multiplier,
-    };
+    return zone ? zone.multiplier : 1;
   }
 }

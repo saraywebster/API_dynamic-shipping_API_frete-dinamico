@@ -5,14 +5,8 @@ import { ZoneRepository } from './zone.repository';
 @Injectable()
 export class CostDeliveryService {
   constructor(private readonly zoneRepository: ZoneRepository) {}
-  async calculateDeliveryCost(dto: OriginDestinationDto) {
-    const distance = this.calculateDistance(dto);
 
-    const costZone = this.zoneRepository.CheckOriginOrDestinatioCost(dto);
-
-    return { costZone };
-  }
-  calculateDistance(dto: OriginDestinationDto): number {
+  private calculateDistance(dto: OriginDestinationDto): number {
     const { origin, destination } = dto;
     const { lat: lat1, lng: lng1 } = origin;
     const { lat: lat2, lng: lng2 } = destination;
@@ -28,10 +22,22 @@ export class CostDeliveryService {
         Math.sin(dLon / 2);
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
+
+    const km = (R * c).toFixed(2);
+
+    return Number(km);
   }
 
   private degToRad(degrees: number): number {
     return degrees * (Math.PI / 180);
+  }
+
+  async calculateDeliveryCost(dto: OriginDestinationDto) {
+    const distance = this.calculateDistance(dto);
+
+    const multiplier =
+      (await this.zoneRepository.findHigherMultiplier(dto)) ?? 1;
+
+    return (multiplier * distance + 7).toFixed(2);
   }
 }
