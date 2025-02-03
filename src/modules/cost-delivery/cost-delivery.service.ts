@@ -38,7 +38,7 @@ export class CostDeliveryService {
     const multiplier =
       (await this.zoneRepository.findHigherMultiplier(dto)) ?? 1;
 
-    const cost = Math.min(distance * multiplier, 7);
+    const cost = Math.max(distance * multiplier, 7);
     const resp = {
       deliveryCost: {
         distance: distance,
