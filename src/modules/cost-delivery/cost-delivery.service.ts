@@ -38,6 +38,18 @@ export class CostDeliveryService {
     const multiplier =
       (await this.zoneRepository.findHigherMultiplier(dto)) ?? 1;
 
-    return (multiplier * distance + 7).toFixed(2);
+    const cost = Math.min(distance * multiplier, 7);
+    const resp = {
+      deliveryCost: {
+        distance: distance,
+        multiplier: multiplier,
+        minCost: 7.0,
+        distanceCost: 1.0,
+        totalCost: cost,
+        currency: 'BRL',
+      },
+    };
+
+    return resp;
   }
 }
