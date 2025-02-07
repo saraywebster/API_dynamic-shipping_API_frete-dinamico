@@ -12,12 +12,12 @@ import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { DynamicZoneEntity } from './dynamic-zone.entity';
 import { CreateZoneDto, UpdateZoneDto } from './zone.dto';
 import { ZoneService } from './zone.service';
-@ApiTags('zones')
-@Controller('freight')
+@ApiTags('zone')
+@Controller('zone')
 export class ZoneController {
   constructor(private readonly zoneService: ZoneService) {}
 
-  @Post('zones')
+  @Post()
   @ApiOperation({
     summary: 'Create zone',
     description: 'create a new zone with a defined multiplier and region',
@@ -36,7 +36,7 @@ export class ZoneController {
     return this.zoneService.createZone(dto);
   }
 
-  @Get('zones')
+  @Get()
   @ApiOperation({
     summary: 'Retrieve all zones',
     description: 'Returns a list of all zones',
@@ -51,7 +51,7 @@ export class ZoneController {
     return this.zoneService.findAllZones();
   }
 
-  @Get('zones/:id')
+  @Get(':id')
   @ApiOperation({
     summary: 'Retrieve zone by id',
     description: 'Returns a specific zone',
@@ -68,7 +68,7 @@ export class ZoneController {
     return this.zoneService.findZoneById(id);
   }
 
-  @Put('zones/:id')
+  @Put(':id')
   @ApiOperation({
     summary: 'Update zone by id',
     description: 'Update the details of a zone',
@@ -85,7 +85,7 @@ export class ZoneController {
     return this.zoneService.updateZone(id, dto);
   }
 
-  @Delete('zones/:id')
+  @Delete(':id')
   @ApiOperation({
     summary: 'Delete zone by id',
     description: 'Remove a zone from the system',

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DynamicZoneEntity } from '../zone/dynamic-zone.entity';
-import { OriginDestinationDto } from './origin-destination.dto';
+import { OriginDestinationDto } from './cost-delivery.dto';
 
 @Injectable()
 export class ZoneRepository {

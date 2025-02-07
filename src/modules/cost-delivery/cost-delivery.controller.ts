@@ -1,24 +1,27 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CostResponseDto, OriginDestinationDto } from './cost-delivery.dto';
 import { CostDeliveryService } from './cost-delivery.service';
-import { OriginDestinationDto } from './origin-destination.dto';
-import { ZoneRepository } from './zone.repository';
+
+@ApiTags('cost-delivery')
 @Controller('cost-delivery')
 export class CostDeliveryController {
   constructor(private readonly costDeliveryService: CostDeliveryService) {}
 
-  @Post('distance')
+  @Post()
   @ApiOperation({ summary: 'create delivery cost' })
   @ApiResponse({
     status: 201,
     description: 'delivery cost success',
-    type: ZoneRepository,
+    type: CostResponseDto,
   })
   @ApiResponse({
     status: 400,
     description: 'Bad Request - invalid data format',
   })
-  async createDeliveryCost(@Body() dto: OriginDestinationDto) {
+  async createDeliveryCost(
+    @Body() dto: OriginDestinationDto,
+  ): Promise<CostResponseDto> {
     //   console.log('📥 Request Body:', JSON.stringify(body, null, 2));
     // return { message: "Recebido com sucesso!" };
 
